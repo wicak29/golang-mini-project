@@ -32,7 +32,7 @@ func (controller *NoteControllers) Index(w http.ResponseWriter, r *http.Request,
 
 	if err != nil {
 		log.Println(err.Error())
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -56,29 +56,55 @@ func (controller *NoteControllers) Index(w http.ResponseWriter, r *http.Request,
 func (controller *NoteControllers) Create(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	// fmt.Println(r)
 	// return
-	_, err := gorm.Open(sqlite.Open("data.db"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open("data.db"), &gorm.Config{})
 	if err != nil {
 		panic(err.Error())
 	}
 
-	files := []string{
-		"./views/base.html",
-		"./views/create.html",
+	if r.Method == "POST" {
+		// fmt.Println(r.FormValue("content"))
+		note := models.Note{
+			Assignee: r.FormValue("assignee"),
+			Content:  r.FormValue("content"),
+			Date:     r.FormValue("deadline"),
+		}
+		fmt.Println(note)
+
+		result := db.Create(&note)
+		if result.Error != nil {
+			log.Println(result.Error)
+			fmt.Println(result.Error)
+			return
+		} else {
+			fmt.Println("Gagal")
+			log.Println(result.Error)
+			fmt.Println(result.Error)
+			return
+		}
+
+		http.Redirect(w, r, "/", http.StatusFound)
+
+	} else {
+		files := []string{
+			"./views/base.html",
+			"./views/create.html",
+		}
+
+		htmlTemplate, err := template.ParseFiles(files...)
+
+		if err != nil {
+			log.Println(err.Error())
+			http.Error(w, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+
+		datas := map[string]interface{}{}
+
+		err = htmlTemplate.ExecuteTemplate(w, "base", datas)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			log.Println(err.Error())
+		}
 	}
 
-	htmlTemplate, err := template.ParseFiles(files...)
-
-	if err != nil {
-		log.Println(err.Error())
-		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	datas := map[string]interface{}{}
-
-	err = htmlTemplate.ExecuteTemplate(w, "base", datas)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		log.Println(err.Error())
-	}
 }

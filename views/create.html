@@ -11,10 +11,34 @@ Tambah Task
 
 {{define "main"}}
 <form action="" method="post">
-	<input type="text" name="content" placeholder="Masukan Task">
-	<input type="text" name="asignee" placeholder="Masukan Penerima">
-	<input type="date" name="deadline">
+	<h1 class="display-6">Create Task</h1>
+	<div class="row mb-2">
+		<div class="col-2" style="text-align: end;">Task Detail</div>
+		<div class="col-6">
+			<textarea name="content" placeholder="Masukan Task" class="form-control"></textarea>
+		</div>
+	</div>
+	<div class="row mb-2">
+		<div class="col-2" style="text-align: end;">Task Detail</div>
+		<div class="col-6">
+			<input type="text" class="form-control" name="assignee" placeholder="Masukan Penerima">
+		</div>
+	</div>
+	<div class="row mb-2">
+		<div class="col-2" style="text-align: end;">Deadline</div>
+		<div class="col-6">
+			<input type="date" class="form-control" name="deadline">
+		</div>
+	</div>
+	<div class="row mb-2">
+		<div class="col-6 offset-2">
+			<button class="btn btn-outline-primary" type="submit">Submit</button>
+		</div>
+	</div>
+	<!-- <input type="text" name="content" placeholder="Masukan Task">
+	<input type="text" name="assignee" placeholder="Masukan Penerima">
+	<input type="date" name="deadline"> -->
 
-	<button type="submit">Submit</button>
+	<!-- <button type="submit">Submit</button> -->
 </form>
 {{end}}
