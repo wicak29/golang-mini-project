@@ -1,0 +1,40 @@
+{{define "title"}}
+Dashboard
+{{end}}
+
+{{define "css"}}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+{{end}}
+
+{{define "script"}}
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+	$(document).ready( function () {
+	    $('.table').DataTable();
+	} );
+</script>
+{{end}}
+
+{{define "main"}}
+	<h1 class="display-6 mt-5">Created Task</h1>
+	<a class="btn btn-primary" href="/create"><i class="fa-solid fa-plus"></i> Create</a>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Task</th>
+				<th>Assigner</th>
+				<th>Deadline</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Ini </td>
+				<td>Haaaa</td>
+				<td>20 Maret 2019 </td>
+				<td>ya</td>
+			</tr>
+		</tbody>
+	</table>
+{{end}}
