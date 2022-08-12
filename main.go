@@ -8,6 +8,7 @@ import (
 	"golang-mini-project/models"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -34,8 +35,12 @@ func main() {
 	router.POST("/done/:id", noteControllers.Done)
 	router.POST("/delete/:id", noteControllers.Delete)
 
-	port := ":1234"
-	fmt.Println("Aplikasi jalan di http://localhost:1234")
+	// port := ":1234"
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = ":9000" // Default port if not specified
+	}
+	fmt.Println("Aplikasi jalan port " + port)
 
 	// fmt.Println("aman boss")
 	log.Fatal(http.ListenAndServe(port, router))
